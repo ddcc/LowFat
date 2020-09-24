@@ -5,6 +5,12 @@ set(LOWFAT_SOURCES
 
 include_directories(..)
 
+# Ugly hack because llvm-4.0.0 doesn't support and silently drops PIC for large
+# code model, which will eventually cause applications to be built with
+# DT_TEXTREL, which is unsupported by musl. Instead, override the compiler here
+# to use modern llvm.
+set(CMAKE_C_COMPILER "/usr/bin/clang-10")
+
 set(LOWFAT_CFLAGS ${SANITIZER_COMMON_CFLAGS} -std=gnu99 -m64 -I. -O2 -mbmi -mbmi2 -mlzcnt -mcmodel=large -DLOWFAT_LINUX)
 
 add_compiler_rt_runtime(clang_rt.lowfat
