@@ -57,7 +57,7 @@ static void lowfat_random_page(void *buf)
 			path);
 }
 
-#ifdef __GLIBC__
+#if 0
 #include <execinfo.h>
 static LOWFAT_NOINLINE void lowfat_backtrace(void)
 {
