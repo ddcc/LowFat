@@ -15,16 +15,12 @@
  */
 
 #include <dlfcn.h>
+#include <sys/file.h>
 #include <sys/mman.h>
 #include <sys/types.h>
 #include <sys/stat.h>
-#include <fcntl.h>
 #include <unistd.h>
 #include <pthread.h>
-
-#ifndef F_SETLEASE
-#define F_SETLEASE              1024
-#endif
 
 extern LOWFAT_NOINLINE const char *lowfat_color_escape_code(FILE *stream,
     bool red)
@@ -103,7 +99,7 @@ static int lowfat_create_shm(size_t size)
     // The following call will fail if:
     // (1) fd is not "the" unique file descriptor to `path'; or
     // (2) a hardlink to `path' exists.
-    if (fcntl(fd, F_SETLEASE, F_WRLCK) < 0)
+    if (flock(fd, LOCK_EX) < 0)
         lowfat_error("failed to lease \"%s\": %s", path, strerror(errno));
     if (ftruncate(fd, size) < 0)
         lowfat_error("failed to truncate \"%s\": %s\n", path, strerror(errno));
