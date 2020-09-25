@@ -290,9 +290,9 @@ else
     exit 1
 fi
 
-echo -e "${GREEN}$0${OFF}: building release package..."
-rm -f "$RELEASE_NAME.tar.xz"
-tar cvJ --owner root --group root -f "$RELEASE_NAME.tar.xz" "$RELEASE_NAME"
+#echo -e "${GREEN}$0${OFF}: building release package..."
+#rm -f "$RELEASE_NAME.tar.xz"
+#tar cvJ --owner root --group root -f "$RELEASE_NAME.tar.xz" "$RELEASE_NAME"
 
 echo -e "${GREEN}$0${OFF}: build is complete!"
 echo -e \
