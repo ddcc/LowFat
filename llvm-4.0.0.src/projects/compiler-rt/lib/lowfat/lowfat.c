@@ -484,6 +484,9 @@ extern LOWFAT_NORETURN void lowfat_oob_error(unsigned info,
 extern void lowfat_oob_warning(unsigned info,
     const void *ptr, const void *baseptr)
 {
+    if (lowfat_get_num_errors() > 0)
+        return;
+
     const char *kind = lowfat_error_kind(info);
     ssize_t overflow = (ssize_t)ptr - (ssize_t)baseptr;
     if (overflow > 0)
